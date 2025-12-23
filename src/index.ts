@@ -2,8 +2,6 @@ import express from 'express';
 import { connection } from "./config/db";
 const app = express();
 const PORT = process.env.PORT || 5000;
-console.log("erwerwe")
-
 
 const startServer = async () => {
     try {

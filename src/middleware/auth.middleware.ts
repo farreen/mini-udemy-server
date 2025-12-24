@@ -12,3 +12,12 @@ export const protect = (req: any, res: Response, next: NextFunction) => {
     res.status(401).json({ message: "Token invalid or expired" });
   }
 };
+
+export const allowRoles = (...roles: ("admin" | "student")[]) => {
+  return (req: any, res: any, next: any) => {
+    if (!req.user || !roles.includes(req.user.role)) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    next();
+  };
+};

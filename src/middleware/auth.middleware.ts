@@ -6,7 +6,13 @@ export const protect = (req: any, res: Response, next: NextFunction) => {
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+      id: number;
+      role: string;
+    };
+
+    req.user = decoded;
+
     next();
   } catch {
     res.status(401).json({ message: "Token invalid or expired" });

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { saveRefreshToken } from "../models/refreshToken.model";
-import { createUser, findUserByEmail } from "../models/user.model";
+import { createUser, findUserByEmail, findUserById } from "../models/user.model";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt";
 
 export const register = async (
@@ -34,4 +34,10 @@ export const login = async (email: string, password: string) => {
   await saveRefreshToken(user.id, refreshToken, expiresAt);
 
   return { accessToken, refreshToken };
+};
+
+export const getCurrentUser = async (userId: number) => {
+  const user = await findUserById(userId);
+  if (!user) throw new Error("User not found");
+  return user;
 };

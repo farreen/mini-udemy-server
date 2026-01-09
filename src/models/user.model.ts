@@ -19,3 +19,11 @@ export const findUserByEmail = async (email: string) => {
   );
   return rows[0];
 };
+
+export const findUserById = async (id: number) => {
+  const [rows] = await db.execute<any[]>(
+    "SELECT id, name, email, role, created_at FROM users WHERE id = ?",
+    [id]
+  );
+  return rows[0];
+};

@@ -31,3 +31,8 @@ export const login = async (req: Request, res: Response) => {
 
   res.json({ message: "Login successful" });
 };
+
+export const getMe = async (req: any, res: Response) => {
+  const user = await AuthService.getCurrentUser(req.user.id);
+  res.json(user);
+};

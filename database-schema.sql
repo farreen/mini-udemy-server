@@ -47,3 +47,4 @@ CREATE INDEX idx_enrollments_student ON enrollments(student_id);
 CREATE INDEX idx_enrollments_course ON enrollments(course_id);
 CREATE INDEX idx_refresh_tokens_user ON refresh_tokens(user_id);
 
+

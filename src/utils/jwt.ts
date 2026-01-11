@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/auth.types.js";
+import { env } from "../config/env.js";
 
 export const generateAccessToken = (payload: JwtPayload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET!, {
+  return jwt.sign(payload, env.jwt.secret, {
     expiresIn: "15m"
   });
 };
@@ -10,7 +11,7 @@ export const generateAccessToken = (payload: JwtPayload) => {
 export const generateRefreshToken = (userId: number) => {
   return jwt.sign(
     { id: userId },
-    process.env.JWT_REFRESH_SECRET!,
+    env.jwt.refreshSecret,
     { expiresIn: "7d" }
   );
 };

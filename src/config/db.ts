@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
 import { env } from "./env";
 
+// For serverless environments, use connection pooling with proper configuration
 export const db = mysql.createPool({
   host: env.db.host,
   user: env.db.user,
@@ -8,6 +9,9 @@ export const db = mysql.createPool({
   database: env.db.name,
   waitForConnections: true,
   connectionLimit: 10,
+  queueLimit: 0,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 });
 
 export async function connection() {
@@ -17,6 +21,10 @@ export async function connection() {
     connection.release();
   } catch (err) {
     console.error("DB connection failed:", err);
-    process.exit(1); // stop app if DB fails
+    // In serverless, don't exit process - let Vercel handle it
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
+    throw err;
   }
 }

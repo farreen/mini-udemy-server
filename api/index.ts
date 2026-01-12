@@ -1,13 +1,18 @@
-// api/index.ts
 import app from "../src/index.js";
 import { connection } from "../src/config/db.js";
 
 let isConnected = false;
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req:any, res:any) {
   if (!isConnected) {
-    await connection();
-    isConnected = true;
+    try {
+      await connection(); // connect to remote DB
+      isConnected = true;
+    } catch (err) {
+      console.error("DB connection failed:", err);
+      return res.status(500).json({ error: "Database connection failed" });
+    }
   }
-  return app(req, res);
+
+  return app(req, res); // pass request to Express app
 }

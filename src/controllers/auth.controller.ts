@@ -13,6 +13,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  console.log("LOGIN HIT");
   const { email, password } = req.body;
   const { accessToken, refreshToken } = await AuthService.login(
     email,

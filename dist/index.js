@@ -40,4 +40,5 @@ const startServer = async () => {
     }
 };
 startServer();
+exports.default = app;
 //# sourceMappingURL=index.js.map

@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import courseRouter from "./routes/course.route.js";
 import enrollmentRouter from "./routes/enrollment.route.js";
-import { connection } from "../src/config/db.js";
+import { connection } from "./config/db.js";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());

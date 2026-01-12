@@ -16,7 +16,7 @@ app.use(cors({
 app.use("/api/auth", authRouter);
 app.use("/api/course", courseRouter);
 app.use("/api/enrollment", enrollmentRouter);
-
+app.use("/", authRouter);
 const startServer = async () => {
   try {
     await connection();

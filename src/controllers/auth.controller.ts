@@ -36,3 +36,8 @@ export const getMe = async (req: any, res: Response) => {
   const user = await AuthService.getCurrentUser(req.user.id);
   res.json(user);
 };
+
+
+export const showRes = async (req: any, res: Response) => {
+  res.status(200).json({ message: "Im running..." });
+};

@@ -3,16 +3,17 @@ import { connection } from "../src/config/db.js";
 
 let isConnected = false;
 
-export default async function handler(req:any, res:any) {
-  if (!isConnected) {
-    try {
-      await connection(); // connect to remote DB
+export default async function handler(req: any, res: any) {
+  try {
+    if (!isConnected) {
+      await connection();
       isConnected = true;
-    } catch (err) {
-      console.error("DB connection failed:", err);
-      return res.status(500).json({ error: "Database connection failed" });
+      console.log("DB connected");
     }
-  }
 
-  return app(req, res); // pass request to Express app
+    return app(req, res);
+  } catch (err) {
+    console.error("Vercel handler error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }

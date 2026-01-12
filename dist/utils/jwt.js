@@ -8,3 +8,4 @@ export const generateAccessToken = (payload) => {
 export const generateRefreshToken = (userId) => {
     return jwt.sign({ id: userId }, env.jwt.refreshSecret, { expiresIn: "7d" });
 };
+//# sourceMappingURL=jwt.js.map

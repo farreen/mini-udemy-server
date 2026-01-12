@@ -27,3 +27,4 @@ export async function connection() {
         throw err;
     }
 }
+//# sourceMappingURL=db.js.map

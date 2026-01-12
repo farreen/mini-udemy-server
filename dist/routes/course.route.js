@@ -10,3 +10,4 @@ courseRouter.post("/", protect, allowRoles("admin"), CourseController.createCour
 courseRouter.put("/:id", protect, allowRoles("admin"), CourseController.updateCourse);
 courseRouter.delete("/:id", protect, allowRoles("admin"), CourseController.deleteCourse);
 export default courseRouter;
+//# sourceMappingURL=course.route.js.map

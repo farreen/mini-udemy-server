@@ -14,3 +14,4 @@ export const checkEnrollmentStatus = async (studentId, courseId) => {
 export const unenrollFromCourse = async (studentId, courseId) => {
     await EnrollmentModel.removeEnrollment(studentId, courseId);
 };
+//# sourceMappingURL=enrollment.service.js.map

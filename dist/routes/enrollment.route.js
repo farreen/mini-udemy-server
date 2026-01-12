@@ -10,3 +10,4 @@ enrollmentRouter.delete("/course/:courseId", protect, allowRoles("student"), Enr
 // Admin route to see enrollments for a course
 enrollmentRouter.get("/course/:courseId/students", protect, allowRoles("admin"), EnrollmentController.getCourseEnrollments);
 export default enrollmentRouter;
+//# sourceMappingURL=enrollment.route.js.map

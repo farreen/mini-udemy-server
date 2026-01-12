@@ -28,3 +28,4 @@ export const getMe = async (req, res) => {
     const user = await AuthService.getCurrentUser(req.user.id);
     res.json(user);
 };
+//# sourceMappingURL=auth.controller.js.map

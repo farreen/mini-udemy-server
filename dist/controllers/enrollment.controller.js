@@ -23,3 +23,4 @@ export const unenrollFromCourse = async (req, res) => {
     await EnrollmentService.unenrollFromCourse(req.user.id, Number(courseId));
     res.json({ message: "Successfully unenrolled from course" });
 };
+//# sourceMappingURL=enrollment.controller.js.map

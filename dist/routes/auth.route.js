@@ -6,3 +6,4 @@ authRouter.post("/register", AuthController.register);
 authRouter.post("/login", AuthController.login);
 authRouter.get("/me", protect, AuthController.getMe);
 export default authRouter;
+//# sourceMappingURL=auth.route.js.map

@@ -24,3 +24,4 @@ export const deleteCourse = async (req, res) => {
     await CourseService.deleteCourse(Number(id), req.user.id);
     res.json({ message: "Course deleted" });
 };
+//# sourceMappingURL=course.controller.js.map

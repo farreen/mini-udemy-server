@@ -18,3 +18,4 @@ export const updateCourse = async (id, title, description, adminId) => {
 export const deleteCourse = async (id, adminId) => {
     await CourseModel.deleteCourse(id, adminId);
 };
+//# sourceMappingURL=course.service.js.map

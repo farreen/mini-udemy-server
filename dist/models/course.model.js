@@ -32,3 +32,4 @@ export const deleteCourse = async (id, adminId) => {
     }
     await db.execute("DELETE FROM courses WHERE id = ?", [id]);
 };
+//# sourceMappingURL=course.model.js.map

@@ -29,3 +29,4 @@ export const getCurrentUser = async (userId) => {
         throw new Error("User not found");
     return user;
 };
+//# sourceMappingURL=auth.service.js.map

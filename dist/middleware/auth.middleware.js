@@ -21,3 +21,4 @@ export const allowRoles = (...roles) => {
         next();
     };
 };
+//# sourceMappingURL=auth.middleware.js.map

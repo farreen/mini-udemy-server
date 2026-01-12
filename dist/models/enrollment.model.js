@@ -32,3 +32,4 @@ export const checkEnrollment = async (studentId, courseId) => {
 export const removeEnrollment = async (studentId, courseId) => {
     await db.execute("DELETE FROM enrollments WHERE student_id = ? AND course_id = ?", [studentId, courseId]);
 };
+//# sourceMappingURL=enrollment.model.js.map

@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { connection } from "./config/db";
-import authRouter from "./routes/auth.route";
-import courseRouter from './routes/course.route';
-import enrollmentRouter from './routes/enrollment.route';
+import { connection } from "./config/db.js";
+import authRouter from "./routes/auth.route.js";
+import courseRouter from './routes/course.route.js';
+import enrollmentRouter from './routes/enrollment.route.js';
 import cookieParser from "cookie-parser";
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,4 +36,4 @@ const startServer = async () => {
 
 startServer();
 
-export default app;
+// export default app;

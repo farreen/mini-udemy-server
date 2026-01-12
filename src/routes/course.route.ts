@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as CourseController from '../controllers/course.controller'
-import { allowRoles, protect } from "../middleware/auth.middleware";
+import * as CourseController from '../controllers/course.controller.js'
+import { allowRoles, protect } from "../middleware/auth.middleware.js";
 const courseRouter = Router();
 
 // Public routes

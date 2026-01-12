@@ -1,4 +1,4 @@
-import { db } from "../config/db";
+import { db } from "../config/db.js";
 
 export const createEnrollment = async (studentId: number, courseId: number) => {
   // Check if already enrolled

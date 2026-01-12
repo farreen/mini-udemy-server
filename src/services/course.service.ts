@@ -1,4 +1,4 @@
-import * as CourseModel from "../models/course.model";
+import * as CourseModel from "../models/course.model.js";
 
 export const createCourse = async (
   title: string,

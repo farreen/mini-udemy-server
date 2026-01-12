@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/auth.types.js";
-import { env } from "../config/env";
+import { env } from "../config/env.js";
 
 export const generateAccessToken = (payload: JwtPayload) => {
   return jwt.sign(payload, env.jwt.secret, {

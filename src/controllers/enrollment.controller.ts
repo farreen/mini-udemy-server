@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as EnrollmentService from "../services/enrollment.service";
+import * as EnrollmentService from "../services/enrollment.service.js";
 
 export const enrollInCourse = async (req: any, res: Response) => {
   const { courseId } = req.params;

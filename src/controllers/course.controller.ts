@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as CourseService from "../services/course.service";
+import * as CourseService from "../services/course.service.js";
 
 export const createCourse = async (req: any, res: Response) => {
   const { title, description } = req.body;

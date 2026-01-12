@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { saveRefreshToken } from "../models/refreshToken.model";
-import { createUser, findUserByEmail, findUserById } from "../models/user.model";
-import { generateAccessToken, generateRefreshToken } from "../utils/jwt";
+import { saveRefreshToken } from "../models/refreshToken.model.js";
+import { createUser, findUserByEmail, findUserById } from "../models/user.model.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 
 export const register = async (
   name: string,

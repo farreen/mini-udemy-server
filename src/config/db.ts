@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { env } from "./env";
+import { env } from "./env.js";
 
 // For serverless environments, use connection pooling with proper configuration
 export const db = mysql.createPool({

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as EnrollmentController from "../controllers/enrollment.controller";
-import { protect, allowRoles } from "../middleware/auth.middleware";
+import * as EnrollmentController from "../controllers/enrollment.controller.js";
+import { protect, allowRoles } from "../middleware/auth.middleware.js";
 
 const enrollmentRouter = Router();
 

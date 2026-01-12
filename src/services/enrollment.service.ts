@@ -1,4 +1,4 @@
-import * as EnrollmentModel from "../models/enrollment.model";
+import * as EnrollmentModel from "../models/enrollment.model.js";
 
 export const enrollInCourse = async (studentId: number, courseId: number) => {
   await EnrollmentModel.createEnrollment(studentId, courseId);

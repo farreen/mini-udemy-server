@@ -38,6 +38,3 @@ export const getMe = async (req: any, res: Response) => {
 };
 
 
-export const showRes = async (req: any, res: Response) => {
-  res.status(200).json({ message: "Im running..." });
-};

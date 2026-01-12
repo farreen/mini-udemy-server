@@ -16,7 +16,12 @@ app.use(cors({
 app.use("/api/auth", authRouter);
 app.use("/api/course", courseRouter);
 app.use("/api/enrollment", enrollmentRouter);
-app.use("/", authRouter);
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Mini Udemy backend is running 🚀"
+  });
+});
 const startServer = async () => {
   try {
     await connection();

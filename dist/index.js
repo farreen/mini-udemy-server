@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.route.js";
 import courseRouter from "./routes/course.route.js";
 import enrollmentRouter from "./routes/enrollment.route.js";
 import { connection } from "./config/db.js";
+import serverlessHttp from "serverless-http";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -18,25 +19,26 @@ app.use("/api/enrollment", enrollmentRouter);
 app.get("/", (_req, res) => {
     res.status(200).json({
         status: "OK",
-        message: "Mini Udemy backend is running...",
+        message: "Mini Udemy backend is running...wohoo",
     });
 });
 let isConnected = false;
 async function connectToDB() {
-    try {
-        if (!isConnected) {
-            await connection();
-            isConnected = true;
-            console.log("DB connected");
-        }
-    }
-    catch (err) {
-        console.error("Vercel handler error:", err);
-    }
+    if (isConnected)
+        return;
+    await connection();
+    isConnected = true;
+    console.log("DB connected");
 }
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     if (!isConnected) {
-        connectToDB();
+        try {
+            await connectToDB();
+        }
+        catch (err) {
+            console.error("DB connection failed:", err);
+            return res.status(500).json({ message: "Database connection failed" });
+        }
     }
     next();
 });
@@ -48,5 +50,6 @@ if (process.env.NODE_ENV !== "production") {
         console.log("Server running on port 5000");
     });
 }
-export default app;
+// Vercel (serverless) entry: wrap Express app in a request handler
+export default serverlessHttp(app);
 //# sourceMappingURL=index.js.map

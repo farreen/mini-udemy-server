@@ -16,7 +16,7 @@ export const getAllCourses = async () => {
     `SELECT c.*, u.name as creator_name 
      FROM courses c 
      LEFT JOIN users u ON c.created_by = u.id 
-     ORDER BY c.created_at DESC`
+     ORDER BY c.created_by DESC`
   );
   return rows;
 };

@@ -23,7 +23,7 @@ app.use("/api/enrollment", enrollmentRouter);
 app.get("/", (_req, res) => {
   res.status(200).json({
     status: "OK",
-    message: "Mini Udemy backend is running 🚀",
+    message: "Mini Udemy backend is running...",
   });
 });
 
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 /**
- * ✅ ONLY listen locally
+ * listen locally ...
  */
 if (process.env.NODE_ENV !== "production") {
   app.listen(5000, () => {

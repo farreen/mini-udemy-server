@@ -1,16 +1,22 @@
 import dotenv from "dotenv";
 dotenv.config();
+function requiredEnv(name) {
+    const value = process.env[name];
+    if (!value)
+        throw new Error(`Missing required environment variable: ${name}`);
+    return value;
+}
 export const env = {
     port: Number(process.env.PORT) || 5000,
     db: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        name: process.env.DB_NAME
+        host: requiredEnv("DB_HOST"),
+        user: requiredEnv("DB_USER"),
+        password: requiredEnv("DB_PASSWORD"),
+        name: requiredEnv("DB_NAME"),
     },
     jwt: {
-        secret: process.env.JWT_SECRET,
-        refreshSecret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET
+        secret: requiredEnv("JWT_SECRET"),
+        refreshSecret: process.env.JWT_REFRESH_SECRET || requiredEnv("JWT_SECRET"),
     }
 };
 //# sourceMappingURL=env.js.map

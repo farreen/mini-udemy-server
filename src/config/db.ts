@@ -7,11 +7,12 @@ export const db = mysql.createPool({
   user: env.db.user,
   password: env.db.password,
   database: env.db.name,
+  // Serverless-friendly timeouts: fail fast instead of hanging.
+  connectTimeout: 5000,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 1,
   queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 0,
+  enableKeepAlive: false,
 });
 
 export async function connection() {
@@ -21,10 +22,6 @@ export async function connection() {
     connection.release();
   } catch (err) {
     console.error("DB connection failed:", err);
-    // In serverless, don't exit process - let Vercel handle it
-    if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
-    }
     throw err;
   }
 }

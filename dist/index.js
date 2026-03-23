@@ -31,6 +31,9 @@ async function connectToDB() {
     console.log("DB connected");
 }
 app.use(async (req, res, next) => {
+    // The health/root endpoint shouldn't depend on MySQL being reachable.
+    if (req.path === "/")
+        return next();
     if (!isConnected) {
         try {
             await connectToDB();

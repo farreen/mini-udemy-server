@@ -1,7 +1,20 @@
 import mysql from "mysql2/promise";
 import { env } from "./env.js";
 
-// For serverless environments, use connection pooling with proper configuration
+function withTimeout<T>(p: Promise<T>, ms: number, message: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(message)), ms);
+    p.then((v) => {
+      clearTimeout(t);
+      resolve(v);
+    }).catch((err) => {
+      clearTimeout(t);
+      reject(err);
+    });
+  });
+}
+
+// For serverless environments, use connection pooling with fail-fast behavior.
 export const db = mysql.createPool({
   host: env.db.host,
   user: env.db.user,
@@ -17,7 +30,12 @@ export const db = mysql.createPool({
 
 export async function connection() {
   try {
-    const connection = await db.getConnection();
+    // mysql2 pool option support can vary; enforce a hard cap around getConnection()
+    const connection = await withTimeout(
+      db.getConnection(),
+      3000,
+      "MySQL connection timed out"
+    );
     console.log("Connected to MySQL");
     connection.release();
   } catch (err) {

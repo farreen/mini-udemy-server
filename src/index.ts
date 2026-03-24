@@ -31,6 +31,7 @@ app.get("/", (_req, res) => {
 let isConnected = false;
 async function connectToDB() {
   if (isConnected) return;
+  // Fail fast so Vercel doesn't hit function invocation timeout.
   await connection();
   isConnected = true;
   console.log("DB connected");

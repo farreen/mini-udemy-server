@@ -5,7 +5,6 @@ import authRouter from "./routes/auth.route.js";
 import courseRouter from "./routes/course.route.js";
 import enrollmentRouter from "./routes/enrollment.route.js";
 import { connection } from "./config/db.js";
-import serverlessHttp from "serverless-http";
 const app = express();
 
 app.use(express.json());
@@ -24,30 +23,26 @@ app.use("/api/enrollment", enrollmentRouter);
 app.get("/", (_req, res) => {
   res.status(200).json({
     status: "OK",
-    message: "Mini Udemy backend is running...wohoo",
+    message: "Mini Udemy backend is running...",
   });
 });
 
 let isConnected = false;
 async function connectToDB() {
-  if (isConnected) return;
-  // Fail fast so Vercel doesn't hit function invocation timeout.
-  await connection();
-  isConnected = true;
-  console.log("DB connected");
+  try {
+    if (!isConnected) {
+      await connection();
+      isConnected = true;
+      console.log("DB connected");
+    }
+  } catch (err) {
+    console.error("Vercel handler error:", err);
+  }
 }
 
-app.use(async (req, res, next) => {
-  // The health/root endpoint shouldn't depend on MySQL being reachable.
-  if (req.path === "/") return next();
-
+app.use((req, res, next) => {
   if (!isConnected) {
-    try {
-      await connectToDB();
-    } catch (err) {
-      console.error("DB connection failed:", err);
-      return res.status(500).json({ message: "Database connection failed" });
-    }
+    connectToDB();
   }
   next();
 });
@@ -61,5 +56,4 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// Vercel (serverless) entry: wrap Express app in a request handler
-export default serverlessHttp(app);
+export default app;

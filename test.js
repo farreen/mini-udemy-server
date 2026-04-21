@@ -57,9 +57,28 @@ function countNegatives(arr) {
     return count
 }
 
-let res1 = countNegatives([-1, 0, -1])
-let res2 = countNegatives([-2, -5, -7])
-let res3 = countNegatives([0, 3, 2])
-let res4 = countNegatives([])
+// let res1 = countNegatives([-1, 0, -1])
+// let res2 = countNegatives([-2, -5, -7])
+// let res3 = countNegatives([0, 3, 2])
+// let res4 = countNegatives([])
 
-console.log("count", res1, res2, res3, res4)
+// console.log("count", res1, res2, res3, res4)
+
+
+function removeElement(nums, val) {
+
+    let index = 0
+    for(let i = 0; i< nums.length; i++){
+      if(nums[i] !== val){
+          nums[index] = nums[i]
+          index++
+      }
+    }
+    return index
+  
+  };
+
+ let  nums = [0,1,2,2,3,0,4,2]
+ let val = 2
+//   const result = removeElement(nums, val)
+//   console.log("result__", result)

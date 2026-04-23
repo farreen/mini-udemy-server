@@ -15,25 +15,39 @@ export const register = async (
 };
 
 export const login = async (email: string, password: string) => {
-  const user = await findUserByEmail(email);
-  if (!user) throw new Error("Invalid credentials");
+  try {
+    const user = await findUserByEmail(email);
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) throw new Error("Invalid credentials");
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
 
-  const accessToken = generateAccessToken({
-    id: user.id,
-    role: user.role,
-  });
+    const match = await bcrypt.compare(password, user.password);
 
-  const refreshToken = generateRefreshToken(user.id);
+    if (!match) {
+      throw new Error("Invalid credentials");
+    }
 
-  const expiresAt = new Date();
-  expiresAt.setDate(expiresAt.getDate() + 7);
+    const accessToken = generateAccessToken({
+      id: user.id,
+      role: user.role,
+    });
 
-  await saveRefreshToken(user.id, refreshToken, expiresAt);
+    const refreshToken = generateRefreshToken(user.id);
 
-  return { accessToken, refreshToken };
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    await saveRefreshToken(user.id, refreshToken, expiresAt);
+
+    return { accessToken, refreshToken };
+  } catch (error: any) {
+    // Log for debugging (important)
+    console.error("Login service error:", error.message);
+
+    // Re-throw so controller can handle it
+    throw new Error(error.message || "Login failed");
+  }
 };
 
 export const getCurrentUser = async (userId: number) => {

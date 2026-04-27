@@ -7,21 +7,31 @@ export const register = async (name, email, password, role) => {
     await createUser(name, email, hashed, role);
 };
 export const login = async (email, password) => {
-    const user = await findUserByEmail(email);
-    if (!user)
-        throw new Error("Invalid credentials");
-    const match = await bcrypt.compare(password, user.password);
-    if (!match)
-        throw new Error("Invalid credentials");
-    const accessToken = generateAccessToken({
-        id: user.id,
-        role: user.role,
-    });
-    const refreshToken = generateRefreshToken(user.id);
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-    await saveRefreshToken(user.id, refreshToken, expiresAt);
-    return { accessToken, refreshToken };
+    try {
+        const user = await findUserByEmail(email);
+        if (!user) {
+            throw new Error("Invalid credentials");
+        }
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            throw new Error("Invalid credentials");
+        }
+        const accessToken = generateAccessToken({
+            id: user.id,
+            role: user.role,
+        });
+        const refreshToken = generateRefreshToken(user.id);
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7);
+        await saveRefreshToken(user.id, refreshToken, expiresAt);
+        return { accessToken, refreshToken };
+    }
+    catch (error) {
+        // Log for debugging (important)
+        console.error("Login service error:", error.message);
+        // Re-throw so controller can handle it
+        throw new Error(error.message || "Login failed");
+    }
 };
 export const getCurrentUser = async (userId) => {
     const user = await findUserById(userId);

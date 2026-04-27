@@ -11,18 +11,27 @@ export const register = async (req, res) => {
     }
 };
 export const login = async (req, res) => {
-    console.log("LOGIN HIT");
-    const { email, password } = req.body;
-    const { accessToken, refreshToken } = await AuthService.login(email, password);
-    res.cookie("accessToken", accessToken, {
-        httpOnly: true,
-        sameSite: "strict",
-    });
-    res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        sameSite: "strict",
-    });
-    res.json({ message: "Login successful" });
+    try {
+        console.log("LOGIN HIT");
+        const { email, password } = req.body;
+        const { accessToken, refreshToken } = await AuthService.login(email, password);
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            sameSite: "strict",
+        });
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            sameSite: "strict",
+        });
+        return res.status(200).json({
+            message: "Login successful",
+        });
+    }
+    catch (error) {
+        return res.status(401).json({
+            message: error.message || "Invalid credentials",
+        });
+    }
 };
 export const getMe = async (req, res) => {
     const user = await AuthService.getCurrentUser(req.user.id);

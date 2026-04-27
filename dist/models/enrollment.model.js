@@ -8,8 +8,11 @@ export const createEnrollment = async (studentId, courseId) => {
     await db.execute("INSERT INTO enrollments (student_id, course_id) VALUES (?, ?)", [studentId, courseId]);
 };
 export const getEnrollmentsByStudent = async (studentId) => {
-    const [rows] = await db.execute(`SELECT e.*, c.title, c.description, c.created_at as course_created_at,
-            u.name as creator_name
+    const [rows] = await db.execute(`SELECT 
+        e.*, 
+        c.title, 
+        c.description,
+        u.name as creator_name
      FROM enrollments e
      JOIN courses c ON e.course_id = c.id
      LEFT JOIN users u ON c.created_by = u.id

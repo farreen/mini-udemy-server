@@ -17,10 +17,14 @@ export const createEnrollment = async (studentId: number, courseId: number) => {
   );
 };
 
+
 export const getEnrollmentsByStudent = async (studentId: number) => {
   const [rows] = await db.execute<any[]>(
-    `SELECT e.*, c.title, c.description, c.created_at as course_created_at,
-            u.name as creator_name
+    `SELECT 
+        e.*, 
+        c.title, 
+        c.description,
+        u.name as creator_name
      FROM enrollments e
      JOIN courses c ON e.course_id = c.id
      LEFT JOIN users u ON c.created_by = u.id
@@ -30,7 +34,6 @@ export const getEnrollmentsByStudent = async (studentId: number) => {
   );
   return rows;
 };
-
 export const getEnrollmentsByCourse = async (courseId: number) => {
   const [rows] = await db.execute<any[]>(
     `SELECT e.*, u.name as student_name, u.email as student_email
@@ -57,4 +60,3 @@ export const removeEnrollment = async (studentId: number, courseId: number) => {
     [studentId, courseId]
   );
 };
-
